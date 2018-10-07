@@ -5,10 +5,6 @@
 
 ### A highly customizable material design card component for React Native.
 
-See [Google Material Design](https://material.io/guidelines/components/cards.html) for more info on Cards.
-
-![Images](https://image.ibb.co/jdxsEG/screenshots.png)
-
 ## Get Started
 
 ### Installation
