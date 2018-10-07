@@ -82,5 +82,3 @@ Then insert the card in your code:
 | `onPress` | `function` | The function to be called when button is pressed | `noop` (defined in [`src/utils`](https://github.com/SiDevesh/React-Native-Material-Cards/blob/master/src/utils/index.js)) |
 | `style` | `object` | The style object to be merged with the default style | `undefined` |
 
-### Todo (PRs welcome!)
-- [ ] Add side media to cards - see [here](https://material.io/guidelines/components/cards.html#cards-usage)
