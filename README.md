@@ -1,5 +1,5 @@
 
-# React Native Cards 
+# React Native Card Style
 
 ![npm version](https://img.shields.io/npm/v/react-native-cards.svg?style=flat-square) ![npm downloads](https://img.shields.io/npm/dm/react-native-cards.svg?style=flat-square) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
@@ -15,50 +15,28 @@ See [Google Material Design](https://material.io/guidelines/components/cards.htm
 
 Install using npm:
 ```
-npm install --save react-native-cards
+npm install --save react-native-card-style
 ```
 or install using Yarn
 ```
-yarn add react-native-cards
+yarn add react-native-card-style
 ```
 
 ## Basic Usage
 
 Import the components like so:  
 ```javascript
-import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-cards';
+import { Card } from 'react-native-card-style';
 ```
 
 Then insert the card in your code:
 ```js
-<ScrollView>
+
 
   <Card>
-    <CardImage 
-      source={{uri: 'http://bit.ly/2GfzooV'}} 
-      title="Top 10 South African beaches"
-    />
-    <CardTitle
-      subtitle="Number 6"
-    />
-    <CardContent text="Clifton, Western Cape" />
-    <CardAction 
-      separator={true} 
-      inColumn={false}>
-      <CardButton
-        onPress={() => {}}
-        title="Share"
-        color="#FEB557"
-      />
-      <CardButton
-        onPress={() => {}}
-        title="Explore"
-        color="#FEB557"
-      />
-    </CardAction>
+    
   </Card>
 
-</ScrollView>
 ```
 
 ## Card Component Options
