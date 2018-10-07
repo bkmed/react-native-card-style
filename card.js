@@ -22,15 +22,15 @@ const DEVICE_HEIGHT = Dimensions.get(`window`).height;
 
  class Card extends Component {
 	  static propTypes = {
-	  	skill: React.PropTypes.object.isRequired,
-	    onScheduleVideo: React.PropTypes.func,
-	    onIncolNow: React.PropTypes.func,
-	    onShare: React.PropTypes.func,
-	    onEditClick: React.PropTypes.func,
-      onDeleteClick: React.PropTypes.func,
-      onCardClick: React.PropTypes.func,
-      userId: React.PropTypes.number,
-      userIdD: React.PropTypes.string,
+	      skill: React.PropTypes.object.isRequired,
+	      onScheduleVideo: React.PropTypes.func,
+	      onIncolNow: React.PropTypes.func,
+	      onShare: React.PropTypes.func,
+	      onEditClick: React.PropTypes.func,
+	      onDeleteClick: React.PropTypes.func,
+	      onCardClick: React.PropTypes.func,
+	      userId: React.PropTypes.number,
+	      userIdD: React.PropTypes.string,
 	  }
     constructor(props) {
     super(props);
@@ -41,70 +41,10 @@ const DEVICE_HEIGHT = Dimensions.get(`window`).height;
     }
 
     componentDidMount(){
-        this.fetchfavoris();
+       
     }
 
-  fetchfavoris()
-  {
-       AsyncStorage.getItem("user").then((id) => {
-     
-           fetch("https://api.welcol.io/api/users/" + id.toString() + "/favorisSessions", {method: "GET", cache: 'no-cache',headers: {'Content-Type': 'application/json'}})
-            .then((response) => {if(response){ return response.json()}})
-            .then((res) => {
-             if(res && res.length >> 0 && this.props.skill)
-                {
-                  for (var i = res.length - 1; i >= 0; i--) {
-                    if( res[i].id.toString() ==  this.props.skill.id.toString())
-                      this.setState({favorite: true});
-                     
-                  };
-                     
-                }
-              else
-                {
-                      
-                }     
-            }).done();
-        }).done();  
-
-
-  }
-
-  addFavoris(skillId)
-  {
-    this.setState({favorite: ! this.state.favorite})
-    AsyncStorage.getItem("user").then((value) => {
-
-        // Save Skill 
-       fetch("https://api.welcol.io/api/users/" + value.toString() +  "/addToFavorisList/"+ skillId.toString(), {method: "POST", headers: {'Content-Type': 'application/json'}})
-       .then((response) => {if(response){ return response.json()}})
-       .then((responseData) => {
-           AsyncStorage.getItem("user").then((value) => {
-                        this.props.fetchDataFavoris(value.toString()); 
-           }).done();
-           this.fetchfavoris();
-      }).done();
-    }).done();  
-  }
-
-
-  removeFavoris(skillId)
-  {
-    this.setState({favorite: ! this.state.favorite})
-    AsyncStorage.getItem("user").then((value) => {
-
-        // Save Skill 
-       fetch("https://api.welcol.io/api/users/" + value.toString() +  "/deleteFromFavorisList/"+ skillId.toString(), {method: "DELETE", headers: {'Content-Type': 'application/json'}})
-       .then((response) => {if(response){ return response.json()}})
-       .then((responseData) => {
-           AsyncStorage.getItem("user").then((value) => {
-                        this.props.fetchDataFavoris(value.toString()); 
-            }).done();
-           this.fetchfavoris();
-
-      }).done();
-    }).done();  
-  }
+  
 
 	renderTags(skill) {
         
@@ -213,28 +153,24 @@ renderProgress(item) {
 			    						}}>0/5</Text>
 			  }
 		}
-renderLogo(skill)
+renderLogo(image)
 {
-    if (skill.user && skill.user.pic)
+    if (image)
       {
-        if(skill.user.pic.nature_link)
-          {var logo = skill.user.pic.url ;}
-        else
-        {var logo = "https://api.welcol.io/uploads/img/pic/" +  skill.user.pic.id + "." + skill.user.pic.url ;}
-         return ( <Thumbnail  small rounded  source={{uri:logo}}></Thumbnail>)
+        return ( <Thumbnail  small rounded  source={{uri:image}}></Thumbnail>)
       } 
     else
       {
         return ( <Thumbnail  small rounded  source={require('../images/default_avatar.jpg')}></Thumbnail>)
       } 
 }	
-renderTitle(item)
+renderTitle(titre)
 {
-  if(item && item.titre && item.titre.length <= 29)
-    return  <Text uppercase style={styles.titleSkill}>{item.titre}</Text>
-  else if(item && item.titre && item.titre.length > 29)
+  if(titre && titre.length <= 29)
+    return  <Text uppercase style={styles.titleSkill}>{titre}</Text>
+  else if(titre && titre.length > 29)
     return    <View>
-                <Text uppercase style={styles.titleSkill}>{item.titre.substr(0,29)}.. </Text>
+                <Text uppercase style={styles.titleSkill}>{titre.substr(0,29)}.. </Text>
               </View>
   else
     return null
@@ -242,17 +178,17 @@ renderTitle(item)
 
 renderHonoraire(item)
 {
-  if(item && item.honoraire && item.honoraire.toString().length < 2)
+  if(honoraire && honoraire.toString().length < 2)
     return  <View  style={styles.viewHonoraireSkill}>
-                 <Text style={styles.textHonoraireSkill}>{item.honoraire+" €"}</Text>
+                 <Text style={styles.textHonoraireSkill}>{honoraire+" €"}</Text>
             </View>
-  else if(item && item.honoraire && item.honoraire.toString().length == 2)
+  else if(honoraire && honoraire.toString().length == 2)
     return  <View  style={styles.viewHonoraireSkill}>
-                 <Text style={styles.textHonoraireSkill3}>{item.honoraire+" €"}</Text>
+                 <Text style={styles.textHonoraireSkill3}>{honoraire+" €"}</Text>
             </View>
-  else if(item && item.honoraire && item.honoraire.toString().length > 2)
+  else if(honoraire && honoraire.toString().length > 2)
     return  <View  style={styles.viewHonoraireSkill}>
-                 <Text style={styles.textHonoraireSkill2}>{item.honoraire+" €"}</Text>
+                 <Text style={styles.textHonoraireSkill2}>{honoraire+" €"}</Text>
             </View>
   else
     return null
@@ -270,12 +206,12 @@ renderHonoraire(item)
                                 skill.image  ?
    
                                       <Image  style={styles.imageSkill}
-                                            source={{uri : "https://api.welcol.io/uploads/img/skill/" + skill.image.id + "." + skill.image.url}} >
+                                            source={{uri : imageCenter}} >
                                         <LinearGradient start={{x: 0.5, y: 1.0}} end={{x: 0.5, y: 0.0}} colors={[ 'rgba(0, 0, 0, 0.65)', 'rgba(1, 1, 1, 0)']} 
                                                 style={styles.linearSkill} >
-                                          {this.renderTitle(skill)}
+                                          {this.renderTitle(title)}
                                         </LinearGradient>
-                                        {this.renderHonoraire(skill)}
+                                        {this.renderHonoraire(honoraire)}
                                       </Image>
         
                                          :
@@ -283,30 +219,30 @@ renderHonoraire(item)
                                             source={require('../images/skill.jpg')} >
                                         <LinearGradient start={{x: 0.5, y: 1.0}} end={{x: 0.5, y: 0.0}} colors={[ 'rgba(0, 0, 0, 0.65)', 'rgba(1, 1, 1, 0)']} 
                                                 style={styles.linearSkill} >
-                                          {this.renderTitle(skill)}
+                                          {this.renderTitle(title)}
                                         </LinearGradient>
-                                        {this.renderHonoraire(skill)}
+                                        {this.renderHonoraire(honoraire)}
                                       </Image>
        
                               }
                             </View>
     		              			<View style={styles.bottomCardSkill}>
     		              				<Grid>
-    		              				    <Col>{this.renderLogo(skill)}</Col>
-    		              				    <Col>{this.renderConnected(skill.user.online)}</Col>
+    		              				    <Col>{this.renderLogo(image)}</Col>
+    		              				    <Col>{this.renderConnected(online)}</Col>
     			              				<Col size={40}>
                                      <Row>
-                                          <Text style={styles.renderNomDetail}note>{skill.user.nom+" "+skill.user.prenom}</Text>
+                                          <Text style={styles.renderNomDetail}note>{username}</Text>
                                       </Row>
-                                      <Row style={styles.renderprogressFeed}>{this.renderProgress(skill)}
-                                      {this.rendernoteMaitrise(skill)}</Row>
+                                      <Row style={styles.renderprogressFeed}>{this.renderProgress(progress)}
+                                      {this.rendernoteMaitrise(note)}</Row>
     			              				</Col>
                                 <Col size={3}> 
                                     <View style={{alignSelf:'flex-end',marginRight:10}}>
                                        { this.state.favorite ? 
-                                        <Icon size={24} name="favorite" color='#e40046' onPress={() => {this.removeFavoris(skill.id)}}  style={styles.flagstyle}> </Icon>
+                                        <Icon size={24} name="favorite" color='#e40046' onPress={() => {}}  style={styles.flagstyle}> </Icon>
                                         :
-                                        <Icon size={24} name="favorite-border" color='#3f3f3f' onPress={() => {this.addFavoris(skill.id)}}  style={styles.flagstyle}> </Icon>
+                                        <Icon size={24} name="favorite-border" color='#3f3f3f' onPress={() => {}}  style={styles.flagstyle}> </Icon>
                                        }
                                     </View>
                                 </Col>
@@ -315,11 +251,11 @@ renderHonoraire(item)
     		              			</View>
     		              			
     		              			<View style={{marginLeft:5,marginTop:20,marginBottom:20,flexDirection : 'row'}}>
-    									         {this.renderTags(skill)}
+    									         {this.renderTags(tag)}
     		              			</View>
     		              			<View style={{alignSelf:'flex-start',marginRight:10,flexDirection : 'row'}}>
-                                                {skill.user.user_languages ?
-                                                  skill.user.user_languages.map(lan =>  
+                                                {languages ?
+                                                  languages.map(lan =>  
                                                   <View style={styles.flagviewDetail2} key = {lan.language.code_iso} >
                                                           <Flag  code={lan.language.code_iso}  style={styles.flagstyleDetail}/>
                                                   </View>)
@@ -444,22 +380,4 @@ else if(skill)
   }
 }
 
-//redux 
-function  mapStateToProps (state, props) {
-    return {
-      isFetchingFavoris: state.FavorisReducer.isFetchingFavoris,
-      favoris: state.FavorisReducer.favoris,    
-      isConnected: state.network.isConnected,
-      }
-  
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(FavorisActions, dispatch);
-}
-
-//end redux
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Card);
+export default Card;
