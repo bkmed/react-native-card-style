@@ -29,7 +29,12 @@ Then insert the card in your code:
 ```js
 
 
-  <Card>
+  <Card styleComponent={{}}
+        onCardClick={() => {const { navigate } = this.props.navigation; navigate('Detail', { data: item  });}}
+        onClickBottomButton ={() => {}}
+        onShare ={() =>{}}
+        item={item}
+        userIdD={""}>
     
   </Card>
 
